@@ -22,7 +22,5 @@ def login(request):
     return render(request,'app/login.html')
 def tracking(request):
     return render(request,'app/tracking.html')
-def elements(request):
-    return render(request,'app/elements.html')
 def contact(request):
     return render(request,'app/contact.html')

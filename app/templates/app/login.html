@@ -37,17 +37,18 @@
           <h3>Log in to enter</h3>
           <form
             class="row login_form"
-            action="contact_process.php"
+            action=""
             method="post"
             id="contactForm"
             novalidate="novalidate"
           >
+            {% csrf_token %}
             <div class="col-md-12 form-group">
               <input
                 type="text"
                 class="form-control"
                 id="name"
-                name="name"
+                name="username"
                 placeholder="Username"
                 onfocus="this.placeholder = ''"
                 onblur="this.placeholder = 'Username'"
@@ -58,7 +59,7 @@
                 type="text"
                 class="form-control"
                 id="name"
-                name="name"
+                name="password"
                 placeholder="Password"
                 onfocus="this.placeholder = ''"
                 onblur="this.placeholder = 'Password'"

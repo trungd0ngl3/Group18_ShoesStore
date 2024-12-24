@@ -21,8 +21,6 @@ class CreateUserForm(UserCreationForm):
         self.fields['password1'].widget = forms.PasswordInput(attrs={'class':'form-control','placeholder':'Password'})
         self.fields['password2'].widget = forms.PasswordInput(attrs={'class':'form-control','placeholder':'Confirm password'})
 
-
-
 # --------
 class ShippingAddress(models.Model):
     address =  models.CharField(max_length=200,null=True)

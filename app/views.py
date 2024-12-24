@@ -1,9 +1,17 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse,JsonResponse
+from .models import *
+from django.contrib.auth.forms import UserCreationForm
 
 # Create your views here.
 def register(request): 
-    return render(request,'app/register.html')
+    form = CreateUserForm()
+    if request.method == 'POST':
+        form = CreateUserForm(request.POST)
+        if form.is_valid():
+            form.save()
+    context = {'form':form}
+    return render(request,'app/register.html',context)
 
 def home(request):
     return render(request,'app/index.html')

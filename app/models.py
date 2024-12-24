@@ -1,9 +1,29 @@
+from dataclasses import field
 from unittest.util import _MAX_LENGTH
 from django.db import models
 from django.contrib.auth.models import User
-from django.forms import CharField
+from django import forms
+from django.contrib.auth.forms import UserCreationForm
 # Create your models here.
+# Change forms register django
+class CreateUserForm(UserCreationForm):
+    class Meta:
+        model = User
+        fields = ['username','first_name', 'last_name', 'email', 'password1', 'password2']
+        widgets = {'username':forms.TextInput(attrs={'class':'form-control','placeholder':'Username'}),
+                    'first_name':forms.TextInput(attrs={'class':'form-control','placeholder':'First name'}),
+                    'last_name':forms.TextInput(attrs={'class':'form-control','placeholder':'Last name'}),
+                    'email':forms.TextInput(attrs={'class':'form-control','placeholder':'Email'}),
+                   
+        }
+    def __init__(self, *args, **kwargs):
+        super(CreateUserForm, self).__init__(*args, **kwargs)
+        self.fields['password1'].widget = forms.PasswordInput(attrs={'class':'form-control','placeholder':'Password'})
+        self.fields['password2'].widget = forms.PasswordInput(attrs={'class':'form-control','placeholder':'Confirm password'})
 
+
+
+# --------
 class ShippingAddress(models.Model):
     address =  models.CharField(max_length=200,null=True)
     city =  models.CharField(max_length=200,null=True)

@@ -12,6 +12,8 @@ urlpatterns = [
     path('blog',views.blog,name='blog'),
     path('blog-details',views.single_blog,name='blog-details'),
     path('login',views.login,name='login'),
+    path('register',views.register,name='register'),
     path('tracking',views.tracking,name='tracking'),
     path('contact',views.contact,name='contact'),
+    
 ]

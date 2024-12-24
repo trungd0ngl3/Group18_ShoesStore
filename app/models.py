@@ -26,7 +26,7 @@ class Product(models.Model):
     
 class Cart(models.Model):
     cart_id = models.CharField(max_length=200)
-    total_price = models.FloatField()
+    total_price = models.FloatField(default=0)
     
 class CartItem(models.Model):
     product = models.ForeignKey(Product, on_delete=models.SET_NULL,blank=True,null=True)

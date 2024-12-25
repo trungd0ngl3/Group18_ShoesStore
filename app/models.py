@@ -41,6 +41,7 @@ class Product(models.Model):
     desciption = models.CharField(max_length=200, null=True)
     price = models.FloatField()
     manufacturer = models.CharField(max_length=200, null=True)
+    image = models.ImageField(null=True, blank=True)
     
 class Cart(models.Model):
     cart_id = models.CharField(max_length=200)

@@ -46,10 +46,18 @@ class Cart(models.Model):
     cart_id = models.CharField(max_length=200)
     total_price = models.FloatField(default=0)
     
+    def get_cart_total(self):
+        cart_items = self.cartitem_set.all() 
+        return sum([item.get_subtotal() for item in cart_items])   
+
+
 class CartItem(models.Model):
     product = models.ForeignKey(Product, on_delete=models.SET_NULL,blank=True,null=True)
     cart = models.ForeignKey(Cart, on_delete=models.SET_NULL,blank=True,null=True)
     quantity = models.IntegerField(default=0,null=True,blank=True)
+
+    def get_subtotal(self):
+        return self.product.price * self.quantity
 
 class Customer(models.Model):
     user = models.OneToOneField(User, on_delete=models.SET_NULL, null=True, blank=False)

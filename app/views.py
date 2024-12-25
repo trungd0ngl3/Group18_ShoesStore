@@ -1,3 +1,4 @@
+from multiprocessing import context
 from django.shortcuts import render,redirect
 from django.http import HttpResponse,JsonResponse
 from .models import *
@@ -46,10 +47,27 @@ def single_product(request):
     return render(request,'app/single-product.html')
 
 def checkout(request):
-    return render(request,'app/checkout.html')
+    if request.user.is_authenticated:
+        customer = request.user.customer
+        cart, created = Cart.objects.get_or_create(customer=customer)
+        items = cart.cartitem_set.all()
+    else:
+        items = []
+        cart = {'get_cart_total':0, 'get_cart_items':0}
+        customer = None
+    context = {'items':items, 'cart':cart, 'customer':customer}
+    return render(request,'app/checkout.html',context)
 
 def cart(request):
-    return render(request,'app/cart.html')
+    if request.user.is_authenticated:
+        customer = request.user.customer
+        cart, created = Cart.objects.get_or_create(customer=customer)
+        items = cart.cartitem_set.all()
+    else:
+        items = []
+        cart = {'get_cart_total':0, 'get_cart_items':0}
+    context = {'items':items, 'cart':cart}
+    return render(request,'app/cart.html',context)
 
 def confirmation(request):
     return render(request,'app/confirmation.html')

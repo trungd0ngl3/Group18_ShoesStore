@@ -35,7 +35,7 @@ def logoutPage(request):
 def home(request):
     products = Product.objects.all()
     context = {'products': products}    
-    return render(request,'app/index.html', context)
+    return render(request,'app/homepage.html', context)
 
 def category(request):
     products = Product.objects.all()

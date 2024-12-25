@@ -1,3 +1,4 @@
+from itertools import product
 from multiprocessing import context
 from django.shortcuts import render,redirect
 from django.http import HttpResponse,JsonResponse
@@ -5,6 +6,8 @@ from .models import *
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
+import json
+
 
 # Create your views here.
 def register(request): 
@@ -68,6 +71,24 @@ def cart(request):
         cart = {'get_cart_total':0, 'get_cart_items':0}
     context = {'items':items, 'cart':cart}
     return render(request,'app/cart.html',context)
+
+def updateItem(request):
+    data = json.loads(request.body)
+    productId = data['productId']
+    action = data['action']
+    customer = request.user.customer
+    product = Product.objects.get(id=productId)
+    cart, created = Cart.objects.get_or_create(customer=customer)
+    cartItem, created = CartItem.objects.get_or_create(cart=cart, product=product)
+    
+    if action == 'add':
+        cartItem.quantity = (cartItem.quantity + 1)
+    elif action == 'remove':
+        cartItem.quantity = (cartItem.quantity - 1)
+    cartItem.save()
+    if cartItem.quantity <= 0:
+        cartItem.delete()
+    return JsonResponse('Item was added', safe=False)
 
 def confirmation(request):
     return render(request,'app/confirmation.html')

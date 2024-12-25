@@ -1,5 +1,9 @@
 {% extends "app/base.html" %} {% load static%} {% block cart_conteiner %}
 <!-- Start Banner Area -->
+<script type="text/javascript">
+  var user = "{{request.user}}";
+</script>
+
 <section class="banner-area organic-breadcrumb" style="margin-bottom: 0px">
   <div class="container">
     <div
@@ -55,16 +59,16 @@
                     class="input-text qty"
                   />
                   <button
-                    onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst )) result.value++ ;return false;"
-                    class="increase items-count"
-                    type="button"
+                    data-product="{{product.id}}"
+                    data-action="add"
+                    class="increase items-count update-cart"
                   >
                     <i class="lnr lnr-chevron-up"></i>
                   </button>
                   <button
-                    onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst ) &amp;&amp; sst > 0 ) result.value--;return false;"
-                    class="reduced items-count"
-                    type="button"
+                    data-product="{{product.id}}"
+                    data-action="remove"
+                    class="reduced items-count update-cart"
                   >
                     <i class="lnr lnr-chevron-down"></i>
                   </button>
@@ -154,4 +158,5 @@
   </div>
 </section>
 <!--================End Cart Area =================-->
+<script src="{% static 'app/js/cart.js' %}"></script>
 {% endblock cart_conteiner %}

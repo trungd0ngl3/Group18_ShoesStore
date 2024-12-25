@@ -33,10 +33,14 @@ def logoutPage(request):
     return redirect('home')
 
 def home(request):
-    return render(request,'app/index.html')
+    products = Product.objects.all()
+    context = {'products': products}    
+    return render(request,'app/index.html', context)
 
 def category(request):
-    return render(request,'app/category.html')
+    products = Product.objects.all()
+    context = {'products': products}
+    return render(request,'app/category.html',context)
 
 def single_product(request):
     return render(request,'app/single-product.html')

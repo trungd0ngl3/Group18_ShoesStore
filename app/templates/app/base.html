@@ -89,7 +89,6 @@
 								<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
 								 aria-expanded="false">Pages</a>
 								<ul class="dropdown-menu">
-									<li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Login</a></li>
 									<li class="nav-item"><a class="nav-link" href="{% url 'tracking' %}">Tracking</a></li>
 								</ul>
 							</li>
@@ -125,8 +124,11 @@
 		</div>
 		<div class="search_input" id="search_input_box">
 			<div class="container">
-				<form class="d-flex justify-content-between">
-					<input type="text" class="form-control" id="search_input" placeholder="Search Here">
+				<form class="d-flex justify-content-between" method= POST action="{% url 'search' %}">
+
+					{% csrf_token %}
+
+					<input type="text" class="form-control" id="search_input" placeholder="Search Here" name="query">
 					<button type="submit" class="btn"></button>
 					<span class="lnr lnr-cross" id="close_search" title="Close Search"></span>
 				</form>
@@ -136,6 +138,7 @@
 	<!-- End Header Area -->
 	<sestion>
 	{% block home_page %}{% endblock home_page %}
+	{% block search_conteiner %}{%endblock search_conteiner%}
 	{% block category_conteiner %}{%endblock category_conteiner%}
 	{% block single_product %}{% endblock single_product %}
 	{% block checkout_conteiner %} {% endblock checkout_conteiner %}

@@ -41,6 +41,7 @@ class Product(models.Model):
     description = models.CharField(max_length=200, null=True)
     price = models.FloatField()
     manufacturer = models.CharField(max_length=200, null=True)
+    is_published = models.BooleanField(default=True)
     image = models.ImageField(null=True, blank=True)
     
 class Cart(models.Model):

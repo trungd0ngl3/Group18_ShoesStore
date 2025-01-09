@@ -135,6 +135,23 @@ def updateItem(request):
         cartItem.delete()
     return JsonResponse('Item was added', safe=False)
 
+def search(request):
+    if request.method == 'POST':
+        query = request.POST['query']
+        products = Product.objects.filter(name__icontains=query)
+    if request.user.is_authenticated:
+        customer = request.user.customer
+        cart, created = Cart.objects.get_or_create(customer=customer)
+        items = cart.cartitem_set.all()
+        cartItems = cart.get_cart_items
+    else:
+        items = []
+        cart = {'get_cart_total':0, 'get_cart_items':0}
+        cartItems = cart['get_cart_total']
+        customer = None
+    context = {'products': products, 'cartItems': cartItems}
+    return render(request,'app/search.html',context)
+
 def confirmation(request):
     return render(request,'app/confirmation.html')
 

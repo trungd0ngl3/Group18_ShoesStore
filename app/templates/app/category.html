@@ -195,7 +195,7 @@
                   <h6>${{product.price}}</h6>
                 </div>
                 <div class="prd-bottom">
-                  <button onclick="window.location.href='{% url 'product-details' %}?id={{product.id}}'" data-product="{{product.id}}" data-action="add" class="add-to-cart btn update-cart">
+                  <button data-product={{product.id}} data-action="add" class="add-to-cart btn update-cart">
 										ADD TO CART
 									</button>
 									
@@ -371,8 +371,7 @@
       <div class="col-lg-3">
         <div class="ctg-right">
           <a href="#" target="_blank">
-            <img class="img-fluid d-block mx-auto" src="{% static
-            "app/img/category/c5.jpg" %}" alt="">
+            <img class="img-fluid d-block mx-auto" src="{% static "app/img/category/c5.jpg" %}" alt="">
           </a>
         </div>
       </div>

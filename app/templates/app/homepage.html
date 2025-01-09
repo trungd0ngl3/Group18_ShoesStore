@@ -1,25 +1,7 @@
 {% extends "app/base.html" %}
 {% load static %}
 {% block home_page %}
-	<script type="text/javascript">
-		var user = '{{request.user}}';
-		function getCookie(name) {
-    	let cookieValue = null;
-    	if (document.cookie && document.cookie !== '') {
-        	const cookies = document.cookie.split(';');
-        for (let i = 0; i < cookies.length; i++) {
-            const cookie = cookies[i].trim();
-            // Does this cookie string begin with the name we want?
-            if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                break;
-            }
-        }
-    }
-    return cookieValue;
-}
-const csrftoken = getCookie('csrftoken');
-	</script>
+	
 
 	<!-- start banner Area -->
 	<section class="banner-area">
@@ -205,6 +187,7 @@ const csrftoken = getCookie('csrftoken');
 				<div class="row">
 					<!-- single product -->
 					{% for product in products|slice:":8" %}
+
 					<div class="col-lg-3 col-md-6">
 						<div class="single-product">
 							<img class="img-fluid" src="{{product.image.url}}" alt="">
@@ -214,7 +197,7 @@ const csrftoken = getCookie('csrftoken');
 									<h6>${{product.price}}</h6>
 								</div>
 								<div class="prd-bottom">
-									<button onclick="window.location.href='{% url 'product-details' %}?id={{product.id}}'" data-product="{{product.id}}" data-action="add" class="add-to-cart btn update-cart">
+									<button data-product={{product.id}} data-action="add" class="add-to-cart btn update-cart">
 										ADD TO CART
 									</button>
 									
@@ -225,7 +208,9 @@ const csrftoken = getCookie('csrftoken');
 							</div>
 						</div>
 					</div>
+
 					{% endfor %}
+
 				</div>
 			</div>
 		
@@ -392,5 +377,5 @@ const csrftoken = getCookie('csrftoken');
 		</div>
 	</section>
 	<!-- End related-product Area -->
-	<script src="{% static 'app/js/cart.js' %}"></script>
+	
 {% endblock home_page %}

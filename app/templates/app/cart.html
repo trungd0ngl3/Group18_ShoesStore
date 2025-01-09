@@ -37,7 +37,11 @@
               <td>
                 <div class="media">
                   <div class="d-flex">
-                    <img src="{% static "app/img/cart.jpg" %}" alt="">
+                    <img
+                      src="{{item.product.image.url}}"
+                      alt=""
+                      width="150px"
+                    />
                   </div>
                   <div class="media-body">
                     <p>{{item.product.name}}</p>

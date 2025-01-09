@@ -67,6 +67,13 @@ def category(request):
         customer = None
 
     products = Product.objects.all()
+    sort_option = request.GET.get('sort_option', '')
+
+    if sort_option != '':
+        products = Product.objects.filter(description=sort_option)
+    if sort_option == 'All':
+        products = Product.objects.all()
+    
     context = {'products': products, 'cartItems': cartItems}
     return render(request,'app/category.html',context)
 
@@ -93,15 +100,18 @@ def single_product(request):
     return render(request,'app/single-product.html', context)
 
 def checkout(request):
+
     if request.user.is_authenticated:
         customer = request.user.customer
         cart, created = Cart.objects.get_or_create(customer=customer)
         items = cart.cartitem_set.all()
         cartItems = cart.get_cart_items
     else:
+        return redirect('login')
         items = []
         cart = {'get_cart_total':0, 'get_cart_items':0}
         customer = None
+        cartItems=0
     context = {'items':items, 'cart':cart, 'customer':customer, 'cartItems':cartItems}
     return render(request,'app/checkout.html',context)
 
@@ -114,6 +124,7 @@ def cart(request):
     else:
         items = []
         cart = {'get_cart_total':0, 'get_cart_items':0}
+        cartItems=0
     context = {'items':items, 'cart':cart, 'cartItems':cartItems}
     return render(request,'app/cart.html',context)
 
@@ -149,17 +160,25 @@ def search(request):
         cart = {'get_cart_total':0, 'get_cart_items':0}
         cartItems = cart['get_cart_total']
         customer = None
-    context = {'products': products, 'cartItems': cartItems}
+    context = {'products': products, 'cartItems': cartItems, 'query': query}
     return render(request,'app/search.html',context)
 
 def confirmation(request):
-    return render(request,'app/confirmation.html')
+    if request.user.is_authenticated:
+        customer = request.user.customer
+        cart, created = Cart.objects.get_or_create(customer=customer)
+        items = cart.cartitem_set.all()
+        cartItems = cart.get_cart_items
+        billing  = BillingAddress.objects.get(customer=customer)
+        shipping = ShippingAddress.objects.get(customer=customer)
+    else:
+        items = []
+        cart = {'get_cart_total':0, 'get_cart_items':0}
+        cartItems = cart['get_cart_total']
+        customer = None
 
-def blog(request):
-    return render(request,'app/blog.html')
-
-def single_blog(request):
-    return render(request,'app/single-blog.html')
+    context = {'items':items, 'cart':cart, 'customer':customer, 'cartItems':cartItems, 'billing':billing, 'shipping':shipping}
+    return render(request,'app/confirmation.html',context)
 
 def tracking(request):
     return render(request,'app/tracking.html')

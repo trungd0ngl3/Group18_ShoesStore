@@ -38,31 +38,28 @@
           <h3>Billing Details</h3>
           <form
             class="row contact_form"
-            action="#"
-            method="post"
+            action="{%url 'confirmation'%}"
+            method="POST"
             novalidate="novalidate"
           >
             <div class="col-md-6 form-group p_star">
-              <input type="text" class="form-control" id="first" name="name" />
-              <span
-                class="placeholder"
-                data-placeholder="{{customer.first_name|default:'First Name'}}"
-              ></span>
-            </div>
-            <div class="col-md-6 form-group p_star">
-              <input type="text" class="form-control" id="last" name="name" />
-              <span
-                class="placeholder"
-                data-placeholder="{{customer.last_name|default:'First Name'}}"
-              ></span>
-            </div>
-            <div class="col-md-12 form-group">
               <input
                 type="text"
                 class="form-control"
-                id="company"
-                name="company"
-                placeholder="Company name"
+                id="first"
+                name="name"
+                placeholder="First Name"
+                value="{{customer.first_name}}"
+              />
+            </div>
+            <div class="col-md-6 form-group p_star">
+              <input
+                type="text"
+                class="form-control"
+                id="last"
+                name="name"
+                placeholder="Last Name"
+                value="{{customer.last_name}}"
               />
             </div>
             <div class="col-md-6 form-group p_star">
@@ -71,11 +68,9 @@
                 class="form-control"
                 id="number"
                 name="number"
+                placeholder="Phone Number"
+                value="{{customer.phone}}"
               />
-              <span
-                class="placeholder"
-                data-placeholder="{{customer.phone|default:'Phone Number'}}"
-              ></span>
             </div>
             <div class="col-md-6 form-group p_star">
               <input
@@ -83,43 +78,28 @@
                 class="form-control"
                 id="email"
                 name="compemailany"
+                placeholder="Email Address"
+                value="{{customer.email}}"
               />
-              <span
-                class="placeholder"
-                data-placeholder="{{customer.email|default:'Email Address'}}"
-              ></span>
             </div>
             <div class="col-md-12 form-group p_star">
-              <select class="country_select">
-                <option value="1">Country</option>
-                <option value="2">Country</option>
-                <option value="4">Country</option>
-              </select>
+              <input
+                type="text"
+                class="form-control"
+                id="add1"
+                name="address"
+                placeholder="Address"
+                value="{{customer.address}}"
+              />
             </div>
             <div class="col-md-12 form-group p_star">
-              <input type="text" class="form-control" id="add1" name="add1" />
-              <span
-                class="placeholder"
-                data-placeholder="Address line 01"
-              ></span>
-            </div>
-            <div class="col-md-12 form-group p_star">
-              <input type="text" class="form-control" id="add2" name="add2" />
-              <span
-                class="placeholder"
-                data-placeholder="Address line 02"
-              ></span>
-            </div>
-            <div class="col-md-12 form-group p_star">
-              <input type="text" class="form-control" id="city" name="city" />
-              <span class="placeholder" data-placeholder="Town/City"></span>
-            </div>
-            <div class="col-md-12 form-group p_star">
-              <select class="country_select">
-                <option value="1">District</option>
-                <option value="2">District</option>
-                <option value="4">District</option>
-              </select>
+              <input
+                type="text"
+                class="form-control"
+                id="city"
+                name="city"
+                placeholder="Town/City"
+              />
             </div>
             <div class="col-md-12 form-group">
               <input
@@ -159,7 +139,9 @@
               <li>
                 <a href="#">Product <span>Total</span></a>
               </li>
+
               {% for item in items %}
+
               <li>
                 <a href="#"
                   >{{item.product.name}}
@@ -167,6 +149,7 @@
                   <span class="last">${{item.get_subtotal}}</span></a
                 >
               </li>
+
               {% endfor %}
             </ul>
             <ul class="list list_2">

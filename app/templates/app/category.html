@@ -185,6 +185,7 @@
         <div class="row">
           <!-- single product -->
           {% for product in products %}
+
           <div class="col-lg-4 col-md-6">
             <div class="single-product">
               <img class="img-fluid" src="{{product.image.url}}" alt="">
@@ -194,17 +195,18 @@
                   <h6>${{product.price}}</h6>
                 </div>
                 <div class="prd-bottom">
-                  <button data-product="{{product.id}}" data-action="add" class="add-to-cart btn update-cart">
+                  <button onclick="window.location.href='{% url 'product-details' %}?id={{product.id}}'" data-product="{{product.id}}" data-action="add" class="add-to-cart btn update-cart">
 										ADD TO CART
 									</button>
 									
-									<button href="{% url 'product-details' %}" class="btn">
+									<button onclick="window.location.href='{% url 'product-details' %}?id={{product.id}}'" class="btn ">
 										VIEW MORE
-									</button>
+                  </button>
                 </div>
               </div>
             </div>
           </div>
+
           {% endfor %}
           
       </section>

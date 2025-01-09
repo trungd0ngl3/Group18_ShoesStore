@@ -47,7 +47,13 @@ def category(request):
     return render(request,'app/category.html',context)
 
 def single_product(request):
-    return render(request,'app/single-product.html')
+    id = request.GET.get('id', '')
+
+    product = Product.objects.get(id=id)
+
+    context = { 'product': product }    
+
+    return render(request,'app/single-product.html', context)
 
 def checkout(request):
     if request.user.is_authenticated:

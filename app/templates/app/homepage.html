@@ -204,10 +204,10 @@ const csrftoken = getCookie('csrftoken');
 				</div>
 				<div class="row">
 					<!-- single product -->
-					{% for product in products %}
+					{% for product in products|slice:":8" %}
 					<div class="col-lg-3 col-md-6">
 						<div class="single-product">
-							<img class="img-fluid" src="{% static "app/img/product/p1.jpg" %}" alt="">
+							<img class="img-fluid" src="{{product.image.url}}" alt="">
 							<div class="product-details">
 								<h6>{{product.name}}</h6>
 								<div class="price">

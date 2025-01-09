@@ -50,6 +50,9 @@ class Cart(models.Model):
     def get_cart_total(self):
         cart_items = self.cartitem_set.all() 
         return sum([item.get_subtotal() for item in cart_items])   
+    def get_cart_items(self):
+        cart_items = self.cartitem_set.all()
+        return sum([item.quantity for item in cart_items])
 
 
 class CartItem(models.Model):

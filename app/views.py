@@ -37,21 +37,58 @@ def logoutPage(request):
     return redirect('home')
 
 def home(request):
-    products = Product.objects.all()
-    context = {'products': products}    
+    if request.user.is_authenticated:
+        customer = request.user.customer
+        cart, created = Cart.objects.get_or_create(customer=customer)
+        items = cart.cartitem_set.all()
+        cartItems = cart.get_cart_items
+
+    else:
+        items = []
+        cart = {'get_cart_total':0, 'get_cart_items':0}
+        cartItems = cart['get_cart_total']
+        customer = None
+
+    products = Product.objects.filter().order_by('-id')[:8]
+    context = {'products': products, 'cartItems': cartItems}    
     return render(request,'app/homepage.html', context)
 
 def category(request):
+    if request.user.is_authenticated:
+        customer = request.user.customer
+        cart, created = Cart.objects.get_or_create(customer=customer)
+        items = cart.cartitem_set.all()
+        cartItems = cart.get_cart_items
+
+    else:
+        items = []
+        cart = {'get_cart_total':0, 'get_cart_items':0}
+        cartItems = cart['get_cart_total']
+        customer = None
+
     products = Product.objects.all()
-    context = {'products': products}
+    context = {'products': products, 'cartItems': cartItems}
     return render(request,'app/category.html',context)
 
 def single_product(request):
+
+    if request.user.is_authenticated:
+        customer = request.user.customer
+        cart, created = Cart.objects.get_or_create(customer=customer)
+        items = cart.cartitem_set.all()
+        cartItems = cart.get_cart_items
+
+    else:
+        items = []
+        cart = {'get_cart_total':0, 'get_cart_items':0}
+        cartItems = cart['get_cart_total']
+        customer = None
+
     id = request.GET.get('id', '')
 
     product = Product.objects.get(id=id)
 
-    context = { 'product': product }    
+    context = { 'product': product , 'cartItems': cartItems}    
 
     return render(request,'app/single-product.html', context)
 
@@ -60,11 +97,12 @@ def checkout(request):
         customer = request.user.customer
         cart, created = Cart.objects.get_or_create(customer=customer)
         items = cart.cartitem_set.all()
+        cartItems = cart.get_cart_items
     else:
         items = []
         cart = {'get_cart_total':0, 'get_cart_items':0}
         customer = None
-    context = {'items':items, 'cart':cart, 'customer':customer}
+    context = {'items':items, 'cart':cart, 'customer':customer, 'cartItems':cartItems}
     return render(request,'app/checkout.html',context)
 
 def cart(request):
@@ -72,10 +110,11 @@ def cart(request):
         customer = request.user.customer
         cart, created = Cart.objects.get_or_create(customer=customer)
         items = cart.cartitem_set.all()
+        cartItems = cart.get_cart_items
     else:
         items = []
         cart = {'get_cart_total':0, 'get_cart_items':0}
-    context = {'items':items, 'cart':cart}
+    context = {'items':items, 'cart':cart, 'cartItems':cartItems}
     return render(request,'app/cart.html',context)
 
 def updateItem(request):

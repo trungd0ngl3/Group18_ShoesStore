@@ -63,14 +63,14 @@
                     class="input-text qty"
                   />
                   <button
-                    data-product="{{product.id}}"
+                    data-product="{{item.product.id}}"
                     data-action="add"
                     class="increase items-count update-cart"
                   >
                     <i class="lnr lnr-chevron-up"></i>
                   </button>
                   <button
-                    data-product="{{product.id}}"
+                    data-product="{{item.product.id}}"
                     data-action="remove"
                     class="reduced items-count update-cart"
                   >
@@ -82,7 +82,9 @@
                 <h5>${{item.get_subtotal}}</h5>
               </td>
             </tr>
+
             {% endfor %}
+
             <tr class="bottom_button">
               <td>
                 <a class="gray_btn" href="{% url 'cart'%}">Update Cart</a>
@@ -162,5 +164,4 @@
   </div>
 </section>
 <!--================End Cart Area =================-->
-<script src="{% static 'app/js/cart.js' %}"></script>
 {% endblock cart_conteiner %}

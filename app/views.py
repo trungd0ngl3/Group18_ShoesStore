@@ -78,7 +78,6 @@ def category(request):
     return render(request,'app/category.html',context)
 
 def single_product(request):
-
     if request.user.is_authenticated:
         customer = request.user.customer
         cart, created = Cart.objects.get_or_create(customer=customer)
@@ -104,7 +103,7 @@ def checkout(request):
     if request.user.is_authenticated:
         customer = request.user.customer
         cart, created = Cart.objects.get_or_create(customer=customer)
-        items = cart.cartitem_set.all()
+        items = cart.cartitem_set.all()        
         cartItems = cart.get_cart_items
     else:
         return redirect('login')

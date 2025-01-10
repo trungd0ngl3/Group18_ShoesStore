@@ -72,9 +72,24 @@
               <img class="img-fluid" src="{{product.image.url}}" alt="">
               <div class="product-details">
                 <h6>{{product.name}}</h6>
+
+                {% if product.promotion.is_valid %}
+
+                <div class="price">
+                  <h6 class="l-through">${{product.price}}</h6>
+                </div>
+                <div class="price">
+                  <h6>${{product.get_discount_price}}</h6>
+                </div>
+                
+                {% else %}
+
                 <div class="price">
                   <h6>${{product.price}}</h6>
                 </div>
+
+                {%endif%}
+
                 <div class="prd-bottom">
                   <button data-product={{product.id}} data-action="add" class="add-to-cart btn update-cart">
 										ADD TO CART

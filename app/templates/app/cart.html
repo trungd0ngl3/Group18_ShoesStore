@@ -48,9 +48,18 @@
                   </div>
                 </div>
               </td>
+              {%if item.product.promotion%}
+              <td>
+                <h5>
+                  <del style="color: lightgrey"> ${{item.product.price}}</del>
+                </h5>
+                <h5>${{item.product.get_discount_price}}</h5>
+              </td>
+              {%else%}
               <td>
                 <h5>${{item.product.price}}</h5>
               </td>
+              {%endif%}
               <td>
                 <div class="product_count">
                   <input

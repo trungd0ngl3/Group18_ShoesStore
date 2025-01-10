@@ -180,7 +180,29 @@ def confirmation(request):
     return render(request,'app/confirmation.html',context)
 
 def tracking(request):
-    return render(request,'app/tracking.html')
+    if request.user.is_authenticated:
+        customer = request.user.customer
+        cart, created = Cart.objects.get_or_create(customer=customer)
+        items = cart.cartitem_set.all()        
+        cartItems = cart.get_cart_items
+    else:
+        items = []
+        cart = {'get_cart_total':0, 'get_cart_items':0}
+        customer = None
+        cartItems=0
+    context = {'items':items, 'cart':cart, 'customer':customer, 'cartItems':cartItems}
+    return render(request,'app/tracking.html',context)
 
 def contact(request):
-    return render(request,'app/contact.html')
+    if request.user.is_authenticated:
+        customer = request.user.customer
+        cart, created = Cart.objects.get_or_create(customer=customer)
+        items = cart.cartitem_set.all()        
+        cartItems = cart.get_cart_items
+    else:
+        items = []
+        cart = {'get_cart_total':0, 'get_cart_items':0}
+        customer = None
+        cartItems=0
+    context = {'items':items, 'cart':cart, 'customer':customer, 'cartItems':cartItems}
+    return render(request,'app/contact.html',context)

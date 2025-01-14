@@ -107,10 +107,7 @@ def checkout(request):
         cartItems = cart.get_cart_items
     else:
         return redirect('login')
-        items = []
-        cart = {'get_cart_total':0, 'get_cart_items':0}
-        customer = None
-        cartItems=0
+    
     context = {'items':items, 'cart':cart, 'customer':customer, 'cartItems':cartItems}
     return render(request,'app/checkout.html',context)
 
